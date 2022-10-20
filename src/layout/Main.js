@@ -18,7 +18,7 @@ const Main = () => {
             <Outlet></Outlet>
           </Col>
           <Col lg="3">
-            <RightSide></RightSide>
+            <RightSide ></RightSide>
           </Col>
         </Row>
       </Container>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ListGroup } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
@@ -9,13 +9,35 @@ import {
   FaTwitter,
   FaWhatsapp,
 } from "react-icons/fa";
+import { useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../AuthContext/AuthProvider";
 import BrandCarosul from "../BrandCarosul/BrandCarosul";
 
 const RightSide = () => {
+  const { googleLogin } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location?.state?.from.pathname || '/'
+
+  const handleGoogle = () => {
+    googleLogin()
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        navigate(from, {replace: true})
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+      });
+  };
   return (
-    <div className="mt-3">
+    <div className="mt-3 ">
       <ButtonGroup vertical>
-        <Button className="mb-3" variant="outline-primary">
+        <Button
+          onClick={handleGoogle}
+          className="mb-3"
+          variant="outline-primary"
+        >
           <FaGoogle /> Login Via Google
         </Button>
         <Button variant="outline-dark">
